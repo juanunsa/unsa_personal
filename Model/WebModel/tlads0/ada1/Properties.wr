@@ -1,0 +1,34 @@
+<ActionDefinition xmlns:gr="http://www.webratio.com/2006/WebML/Graph" id="tlads0#ada1" name="guardar_pedido" defaultSuccessPortDefinition="tlads0#ada1#spd1" defaultErrorPortDefinition="tlads0#ada1#epd1">
+  <InputPortDefinition id="tlads0#ada1#ipd1" gr:x="0" gr:y="30">
+    <SuccessFlow id="tlads0#ada1#ipd1#sf3" to="tlads0#ada1#svu2">
+      <ParameterBinding id="tlads0#ada1#ipd1#sf3#par1" source="tlads0#ada1#ipd1#pdp1" target="tlads0#ada1#svu2.cls14#att53" name="categoria - categoria"/>
+      <ParameterBinding id="tlads0#ada1#ipd1#sf3#par2" source="tlads0#ada1#ipd1#pdp2" target="tlads0#ada1#svu2.cls14#att51" name="cargo - cargo"/>
+      <ParameterBinding id="tlads0#ada1#ipd1#sf3#par3" source="tlads0#ada1#ipd1#pdp3" target="tlads0#ada1#svu2.cls14#att52" name="materia - materia"/>
+      <ParameterBinding id="tlads0#ada1#ipd1#sf3#par4" source="tlads0#ada1#ipd1#pdp4" target="tlads0#ada1#svu2.as8#role16.cls13#att42" name="Tribunal.oid(PedidoToTribunal) - Tribunal.oid(PedidoToTribunal)"/>
+      <ParameterBinding id="tlads0#ada1#ipd1#sf3#par5" source="tlads0#ada1#ipd1#pdp5" target="tlads0#ada1#svu2.cls14#att54" name="tribunal - tribunal"/>
+    </SuccessFlow>
+    <PortDefinitionParameter id="tlads0#ada1#ipd1#pdp1" array="true" name="categoria" type="string"/>
+    <PortDefinitionParameter id="tlads0#ada1#ipd1#pdp2" array="true" name="cargo" type="string">
+      <VRules>
+        <LikeValidationRule id="tlads0#ada1#ipd1#pdp2#like1" name="Like1" predicate="contains" value="JTP" ignoreCase="true"/>
+      </VRules>
+    </PortDefinitionParameter>
+    <PortDefinitionParameter id="tlads0#ada1#ipd1#pdp3" array="true" name="materia" type="integer">
+      <VRules>
+        <CollectionValidationRule id="tlads0#ada1#ipd1#pdp3#clc1" name="Collection1" predicate="in" dataBinding="cls12" attribute="cls12#att40"/>
+      </VRules>
+    </PortDefinitionParameter>
+    <PortDefinitionParameter id="tlads0#ada1#ipd1#pdp5" array="true" name="tribunal" type="integer"/>
+  </InputPortDefinition>
+  <SuccessPortDefinition id="tlads0#ada1#spd1" name="Success Port" gr:x="0" gr:y="30"/>
+  <ErrorPortDefinition id="tlads0#ada1#epd1" name="Error Port" gr:x="0" gr:y="300"/>
+  <Operations>
+    <Save gr:x="440" gr:y="110" id="tlads0#ada1#svu2" action="save" name="Guardar_pedido" dataBinding="cls14">
+      <ConditionalExpression id="tlads0#ada1#svu2#sc2" defaultPolicy="fill" booleanOperator="and">
+        <KeyCondition id="tlads0#ada1#svu2#sc2#kcond2" name="KeyCondition2" predicate="in" implied="false"/>
+      </ConditionalExpression>
+      <SuccessFlow id="tlads0#ada1#svu2#sf4" to="tlads0#ada1#spd1" automaticCoupling="true"/>
+      <ErrorFlow id="tlads0#ada1#svu2#ef2" to="tlads0#ada1#epd1" automaticCoupling="true"/>
+    </Save>
+  </Operations>
+</ActionDefinition>

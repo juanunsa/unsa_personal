@@ -1,0 +1,294 @@
+<DomainModel xmlns:db="http://www.webratio.com/2006/WebML/Database" xmlns:gr="http://www.webratio.com/2006/WebML/Graph">
+  <Class id="User" name="User" duration="persistent" gr:x="20" gr:y="150" gr:hideAttributes="false" attributeOrder="userName secretKey" db:database="dbD1" db:table="USER" db:isView="true">
+    <Attribute name="User ID" id="userName" type="string" key="true" db:column="USER_ID"/>
+    <Attribute id="secretKey" name="Secret Key" type="password" db:cryptAlgorithm="com.webratio.data.crypto.PBKDF2WithHmacSHA1CryptImplementation" db:column="SECRET_KEY"/>
+    <Comment xml:space="preserve">A user represents one mobile application user. In addition to the standard information such as username, a user is also characterized by a token. The token is a string that authorizes the usage of all services published by the backend application. The token is automatically set by the backend application at login. The token may have a limited duration, that's why a token expiration date can be set. The secret key is the encryption key used when transferring files between the mobile application and the backend.</Comment>
+  </Class>
+  <Package gr:x="270" gr:y="80" id="auth" name="Authentication">
+    <Class gr:x="465" gr:y="390" id="authApl" name="Application" duration="persistent" attributeOrder="authAplId authAplSecretKey authAplAuthorities authAplAccessTokenValidity authAplRefreshTokenValidity authAplName authAplDescription authAplType" db:database="dbD1" db:table="APPLICATION">
+      <Attribute id="authAplId" key="true" name="App ID" type="string" db:column="APP_ID"/>
+      <Attribute id="authAplRefreshTokenValidity" name="Refresh Token Validity" type="integer" key="false" db:column="REFRESH_TOKEN_VALIDITY"/>
+      <Attribute id="authAplAccessTokenValidity" name="Access Token Validity" type="integer" key="false" db:column="ACCESS_TOKEN_VALIDITY"/>
+      <Attribute id="authAplAuthorities" name="Authorities" type="string" key="false" db:column="AUTHORITIES"/>
+      <Attribute id="authAplSecretKey" name="Secret" type="password" key="false" db:cryptAlgorithm="com.webratio.data.crypto.PBKDF2WithHmacSHA1CryptImplementation" db:column="SECRET"/>
+      <Attribute id="authAplDescription" name="Description" type="string" db:column="DESCRIPTION"/>
+      <Attribute id="authAplName" name="Name" type="string" db:column="NAME">
+        <VRules>
+          <MandatoryValidationRule id="authVRAppName" name="Mandatory"/>
+        </VRules>
+      </Attribute>
+      <Attribute id="authAplType" name="Type" type="string" db:column="TYPE">
+        <VRules>
+          <MandatoryValidationRule id="authVRAppType" name="Mandatory"/>
+        </VRules>
+      </Attribute>
+    </Class>
+    <Class gr:x="750" gr:y="255" id="authCod" name="Code" duration="persistent" attributeOrder="authCodCode authCodAuthentication authCodCreationDate" db:database="dbD1" db:table="CODE">
+      <Attribute id="authCodCode" key="true" name="Code" type="string" db:column="CODE"/>
+      <Attribute id="authCodAuthentication" name="Authentication" type="string" key="false" db:column="AUTHENTICATION"/>
+      <Attribute id="authCodCreationDate" name="Creation Date" type="timestamp" key="false" db:column="CREATION_DATE"/>
+    </Class>
+    <Class gr:x="350" gr:y="215" id="authApv" name="Approval" duration="persistent" attributeOrder="authApvScope authApvStatus authApvExpireDate authApvLastModifiedDate authApvOid" db:database="dbD1" db:table="APPROVAL">
+      <Attribute id="authApvLastModifiedDate" name="Updated At" type="timestamp" key="false" db:column="UPDATED_AT"/>
+      <Attribute id="authApvExpireDate" name="Expiration Date" type="timestamp" key="false" db:column="EXPIRATION_DATE"/>
+      <Attribute id="authApvStatus" name="Status" type="string" key="false" db:column="STATUS"/>
+      <Attribute id="authApvScope" name="Scope" type="string" key="false" db:column="SCOPE"/>
+      <Attribute id="authApvOid" name="oid" type="integer" key="true" db:column="OID"/>
+    </Class>
+    <Class gr:x="15" gr:y="435" id="authRft" name="Refresh Token" duration="persistent" attributeOrder="authRftOid authRftToken authRftExpireDate" db:database="dbD1" db:table="REFRESH_TOKEN">
+      <Attribute id="authRftOid" key="true" name="oid" type="integer" db:column="OID"/>
+      <Attribute id="authRftToken" name="Token" type="string" db:columnSize="1000" db:column="TOKEN"/>
+      <Attribute id="authRftExpireDate" name="Expiration Date" type="timestamp" key="false" storageType="database" db:column="EXPIRATION_DATE">
+        <VRules>
+          <MandatoryValidationRule id="authVRExpDate" name="Mandatory"/>
+        </VRules>
+      </Attribute>
+    </Class>
+    <Class gr:x="0" gr:y="135" id="authIdy" name="Identity" duration="persistent" attributeOrder="authIdyUserName authIdyPassword authIdyFirstName authIdyLastName authIdyLocked authIdyExpired authIdyDisabled authIdyPasswordExpireDate authIdyFailedLoginCount authIdyEmail authIdyAuthAdmin" db:database="dbD1" db:table="IDENTITY">
+      <Attribute id="authIdyExpired" name="Expired" type="boolean" key="false" db:column="EXPIRED"/>
+      <Attribute id="authIdyLocked" name="Locked" type="boolean" key="false" db:column="LOCKED"/>
+      <Attribute id="authIdyPassword" name="Password" type="password" key="false" db:cryptAlgorithm="com.webratio.data.crypto.PBKDF2WithHmacSHA1CryptImplementation" db:column="PASSWORD">
+        <VRules>
+          <MandatoryValidationRule id="authVRPwd" name="Mandatory"/>
+          <PasswordStrengthValidationRule id="authVRPwdStrength" name="Password Strength" securityLevel="medium"/>
+        </VRules>
+      </Attribute>
+      <Attribute id="authIdyUserName" name="User ID" type="string" key="true" db:column="USER_ID">
+        <VRules>
+          <MandatoryValidationRule id="authVRUserID" name="Mandatory"/>
+        </VRules>
+      </Attribute>
+      <Attribute id="authIdyDisabled" name="Disabled" type="boolean" key="false" db:column="DISABLED"/>
+      <Attribute id="authIdyFailedLoginCount" name="Attempts Number" type="integer" key="false" db:column="ATTEMPTS_NUMBER"/>
+      <Attribute id="authIdyPasswordExpireDate" name="Password Expiration Date" type="timestamp" key="false" db:column="PASSWORD_EXPIRATION_DATE"/>
+      <Attribute id="authIdyEmail" name="Email" type="string" key="false" db:column="EMAIL">
+        <VRules>
+          <EMailValidationRule id="authVRValidEmail" name="Email"/>
+          <MandatoryValidationRule id="authVREmail" name="Mandatory"/>
+        </VRules>
+      </Attribute>
+      <Attribute id="authIdyAuthAdmin" name="Auth Admin" type="boolean" db:column="AUTH_ADMIN"/>
+      <Attribute id="authIdyFirstName" name="First Name" type="string" db:column="FIRST_NAME"/>
+      <Attribute id="authIdyLastName" name="Last Name" type="string" db:column="LAST_NAME"/>
+    </Class>
+    <Class gr:x="750" gr:y="385" id="authScp" name="Scope" duration="persistent" attributeOrder="authScpOid authScpName authScpAutoApprove" db:database="dbD1" db:table="SCOPE">
+      <Attribute id="authScpOid" key="true" name="oid" type="integer" db:column="OID"/>
+      <Attribute id="authScpAutoApprove" name="Auto Approve" type="boolean" db:column="AUTO_APPROVE"/>
+      <Attribute id="authScpName" name="Name" type="string" db:column="NAME"/>
+    </Class>
+    <Class gr:x="235" gr:y="510" id="authAgt" name="Authorized Grant Type" duration="persistent" attributeOrder="authAgtOid authAgtName" db:database="dbD1" db:table="AUTHORIZED_GRANT_TYPE">
+      <Attribute id="authAgtOid" key="true" name="oid" type="integer" db:column="OID"/>
+      <Attribute id="authAgtName" name="Name" type="string" db:column="NAME"/>
+    </Class>
+    <Class gr:x="750" gr:y="510" id="authRsc" name="Authorized Resource" duration="persistent" attributeOrder="authRscOid authRscName" db:database="dbD1" db:table="AUTHORIZED_RESOURCE">
+      <Attribute id="authRscOid" key="true" name="oid" type="integer" db:column="OID"/>
+      <Attribute id="authRscName" name="Name" type="string" db:column="NAME"/>
+    </Class>
+    <Class gr:x="480" gr:y="0" id="Device" name="Device" duration="persistent" attributeOrder="deviceOid deviceId notificationDeviceId deviceModel devicePlatform devicePlatformVersion deviceBrowser" db:database="dbD1" db:table="DEVICE">
+      <Attribute id="deviceOid" name="oid" type="integer" key="true" db:column="OID"/>
+      <Attribute id="deviceId" name="Device ID" type="string" db:column="DEVICE_ID"/>
+      <Attribute id="notificationDeviceId" name="Notification Device ID" type="string" db:column="NOTIFICATION_DEVICE_ID"/>
+      <Attribute id="deviceModel" name="Model" type="string" db:column="MODEL"/>
+      <Attribute id="devicePlatform" name="Platform" type="string" db:column="PLATFORM"/>
+      <Attribute id="devicePlatformVersion" name="Platform Version" type="string" db:column="PLATFORM_VERSION"/>
+      <Attribute id="deviceBrowser" name="Browser" type="string" db:column="BROWSER"/>
+      <Comment xml:space="preserve">A device represents a mobile phone or a tablet on which there's an app that interacts with the backend application. A device is identified through the Device ID, which is automatically calculated from the backend application. Other information about the device: the Model (e.g. iPhone 6), the Platform (iOS/Android) and its version (e.g. 8.1.3), the installed Browser (e.g. Mozilla/5.0). Finally the Notification Device ID identifies the device for sending push notifications to the installed app; it must be sent by the mobile application at login.</Comment>
+    </Class>
+    <Class gr:x="55" gr:y="5" id="authClaim" name="Claim" duration="persistent" attributeOrder="authClaimOid authClaimKey authClaimValue" db:database="dbD1" db:table="CLAIM">
+      <Attribute id="authClaimOid" key="true" name="oid" type="integer" db:column="OID"/>
+      <Attribute id="authClaimKey" name="Key" type="string" db:column="KEY"/>
+      <Attribute id="authClaimValue" name="Value" type="string" db:columnSize="1000" db:column="VALUE"/>
+    </Class>
+  </Package>
+  <Association id="authScp_Apl" name="Scope_Application" sourceClass="authScp" targetClass="authApl" db:database="dbD1" db:table="SCOPE">
+    <AssociationRole1 id="authScp2Apl" name="ScopeToApplication" maxCard="1" cascadeDelete="true">
+      <db:JoinColumn attribute="authScpOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Scp" name="ApplicationToScope" maxCard="N">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authAgt_Apl" name="AuthorizedGrantType_Application" sourceClass="authAgt" targetClass="authApl" db:database="dbD1" db:table="AUTHORIZED_GRANT_TYPE">
+    <AssociationRole1 id="authAgt2Apl" name="AuthorizedGrantTypeToApplication" maxCard="1" cascadeDelete="true">
+      <db:JoinColumn attribute="authAgtOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Agt" name="ApplicationToAuthorizedGrantType" maxCard="N">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authRsc_Apl" name="AuthorizedResource_Application" sourceClass="authRsc" targetClass="authApl" db:database="dbD1" db:table="AUTHORIZED_RESOURCE">
+    <AssociationRole1 id="authRsc2Apl" name="AuthorizedResourceToApplication" maxCard="1" cascadeDelete="true">
+      <db:JoinColumn attribute="authRscOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Rsc" name="ApplicationToAuthorizedResource" maxCard="N">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authApv_Apl" name="Approval_Application" sourceClass="authApv" targetClass="authApl" db:database="dbD1" db:table="APPROVAL">
+    <AssociationRole1 id="authApv2Apl" name="ApprovalToApplication" maxCard="1">
+      <db:JoinColumn attribute="authApvOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Apv" name="ApplicationToApproval" maxCard="N" cascadeDelete="true">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authApv_Idy" name="Approval_Identity" sourceClass="authApv" targetClass="authIdy" db:database="dbD1" db:table="APPROVAL">
+    <AssociationRole1 id="authApv2Idy" name="ApprovalToIdentity" maxCard="1">
+      <db:JoinColumn attribute="authApvOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authIdy2Apv" name="IdentityToApproval" maxCard="N" cascadeDelete="true">
+      <db:JoinColumn attribute="authIdyUserName" name="IDENTITY_USER_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authRft_Idy" name="RefreshToken_Identity" sourceClass="authRft" targetClass="authIdy" db:database="dbD1" db:table="REFRESH_TOKEN">
+    <AssociationRole1 id="authRft2Idy" name="RefreshTokenToIdentity" maxCard="1">
+      <db:JoinColumn attribute="authRftOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authIdy2Rft" name="IdentityToRefreshToken" maxCard="N" cascadeDelete="true">
+      <db:JoinColumn attribute="authIdyUserName" name="IDENTITY_USER_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authRft_Apl" name="RefreshToken_Application" sourceClass="authRft" targetClass="authApl" db:database="dbD1" db:table="REFRESH_TOKEN">
+    <AssociationRole1 id="authRft2Apl" name="RefreshTokenToApplication" maxCard="1">
+      <db:JoinColumn attribute="authRftOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Rft" name="ApplicationToRefreshToken" maxCard="N" cascadeDelete="true">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authClaim_Idy" name="Claim_Identity" sourceClass="authClaim" targetClass="authIdy" db:database="dbD1" db:table="CLAIM_IDENTITY">
+    <AssociationRole1 id="authClaim2Idy" name="ClaimToIdentity" maxCard="N">
+      <db:JoinColumn attribute="authClaimOid" name="CLAIM_OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authIdy2Claim" name="IdentityToClaim" maxCard="N">
+      <db:JoinColumn attribute="authIdyUserName" name="IDENTITY_USER_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authDevice_Idy" name="Device_Identity" sourceClass="Device" targetClass="authIdy" db:database="dbD1" db:table="DEVICE">
+    <AssociationRole1 id="authDevice2Idy" name="DeviceToIdentity" maxCard="1">
+      <db:JoinColumn attribute="deviceOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authIdy2Device" name="IdentityToDevice" maxCard="N">
+      <db:JoinColumn attribute="authIdyUserName" name="IDENTITY_USER_ID"/>
+    </AssociationRole2>
+  </Association>
+  <Association id="authDevice_Apl" name="Device_Application" sourceClass="Device" targetClass="authApl" db:database="dbD1" db:table="DEVICE">
+    <AssociationRole1 id="authDevice2Apl" name="DeviceToApplication" maxCard="1">
+      <db:JoinColumn attribute="deviceOid" name="OID"/>
+    </AssociationRole1>
+    <AssociationRole2 id="authApl2Device" name="ApplicationToDevice" maxCard="N">
+      <db:JoinColumn attribute="authAplId" name="APPLICATION_APP_ID"/>
+    </AssociationRole2>
+  </Association>
+  <ActionServices>
+    <ActionService definition="tlads0#ada1" method="create" hasAuthUser="true"/>
+  </ActionServices>
+  <DataServices db:dataServicesDatabase="dbD1">
+    <ServiceClass class="User">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls14">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls13">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls10">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls12">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+    <ServiceClass class="cls11">
+      <ServiceRole>
+        <ServiceMethod method="read"/>
+      </ServiceRole>
+    </ServiceClass>
+  </DataServices>
+  <UserServices>
+    <UserServiceOperation type="read"/>
+    <UserServiceOperation type="register"/>
+    <UserServiceOperation type="update"/>
+  </UserServices>
+  <AuthenticationServices db:authServicesDatabase="dbD1">
+    <AuthenticationServiceClass class="authApl">
+      <AuthenticationServiceMethod type="application_create"/>
+      <AuthenticationServiceMethod type="application_read"/>
+      <AuthenticationServiceMethod type="application_update"/>
+      <AuthenticationServiceMethod type="application_delete"/>
+    </AuthenticationServiceClass>
+    <AuthenticationServiceClass class="authIdy">
+      <AuthenticationServiceMethod type="identity_create"/>
+      <AuthenticationServiceMethod type="identity_read"/>
+      <AuthenticationServiceMethod type="identity_update"/>
+      <AuthenticationServiceMethod type="identity_delete"/>
+      <AuthenticationServiceMethod type="identity_change_password"/>
+    </AuthenticationServiceClass>
+    <AuthenticationServiceClass class="authClaim">
+      <AuthenticationServiceMethod type="claim_create"/>
+      <AuthenticationServiceMethod type="claim_read_by_user"/>
+      <AuthenticationServiceMethod type="claim_update"/>
+      <AuthenticationServiceMethod type="claim_delete"/>
+    </AuthenticationServiceClass>
+    <AuthenticationServiceClass class="authApv">
+      <AuthenticationServiceMethod type="approval_create"/>
+      <AuthenticationServiceMethod type="approval_read_by_user"/>
+      <AuthenticationServiceMethod type="approval_read_by_application"/>
+      <AuthenticationServiceMethod type="approval_update"/>
+      <AuthenticationServiceMethod type="approval_delete"/>
+    </AuthenticationServiceClass>
+    <AuthenticationServiceOperation type="token_create"/>
+    <AuthenticationServiceOperation type="token_revoke"/>
+    <AuthenticationServiceOperation type="messaging_subscribe"/>
+    <AuthenticationServiceOperation type="messaging_unsubscribe"/>
+    <IdentityToken>
+      <IdentityTokenClaim id="itClaimAudience" name="Audience"/>
+      <IdentityTokenClaim id="itClaimClientId" name="Client ID"/>
+      <IdentityTokenClaim id="itClaimExpirationTime" name="Expiration time"/>
+      <IdentityTokenClaim id="itClaimJWTTokenId" name="JWT Token ID"/>
+      <IdentityTokenClaim id="itClaimGrantType" name="Grant type"/>
+      <IdentityTokenClaim id="itClaimAccessTokenId" name="Access Token ID"/>
+      <IdentityTokenClaim id="itClaimUserName" name="Username"/>
+    </IdentityToken>
+  </AuthenticationServices>
+  <db:Database id="dbD1" name="Personal" type="Apache Derby" url="jdbc:derby://localhost:1527/C://datosDerby/Personal;create=true" username="root" password="juan6084" schema="APP"/>
+  <Class id="cls10" name="Facultad" duration="persistent" gr:x="30" gr:y="345" attributeOrder="cls10#att36 cls10#att37" db:database="dbD1" db:table="FACULTAD">
+    <Attribute id="cls10#att36" key="true" name="oid" type="integer" db:column="OID"/>
+    <Attribute id="cls10#att37" name="nombre" type="string" db:column="NOMBRE"/>
+  </Class>
+  <Class id="cls11" name="Carrera" duration="persistent" gr:x="55" gr:y="460" attributeOrder="cls11#att38 cls11#att39" db:database="dbD1" db:table="CARRERA">
+    <Attribute id="cls11#att38" key="true" name="oid" type="integer" db:column="OID"/>
+    <Attribute id="cls11#att39" name="nombre" type="string" db:column="NOMBRE"/>
+  </Class>
+  <Class id="cls12" name="materia" duration="persistent" gr:x="65" gr:y="570" attributeOrder="cls12#att40 cls12#att41" db:database="dbD1" db:table="MATERIA">
+    <Attribute id="cls12#att40" key="true" name="oid" type="integer" db:column="OID"/>
+    <Attribute id="cls12#att41" name="nombre" type="string" db:column="NOMBRE"/>
+  </Class>
+  <Class id="cls13" name="Tribunal" duration="persistent" gr:x="75" gr:y="665" attributeOrder="cls13#att42 cls13#att43 cls13#att44 cls13#att45 cls13#att46 cls13#att47 cls13#att48 cls13#att49" db:database="dbD1" db:table="TRIBUNAL">
+    <Attribute id="cls13#att42" key="true" name="oid" type="integer" db:column="OID"/>
+    <Attribute id="cls13#att43" name="titular" type="integer" db:column="TITULAR"/>
+    <Attribute id="cls13#att44" name="titular2" type="integer" db:column="TITULAR2"/>
+    <Attribute id="cls13#att45" name="titular3" type="integer" db:column="TITULAR3"/>
+    <Attribute id="cls13#att46" name="suplente1" type="integer" db:column="SUPLENTE1"/>
+    <Attribute id="cls13#att47" name="suplente2" type="integer" db:column="SUPLENTE2"/>
+    <Attribute id="cls13#att48" name="suplente3" type="integer" db:column="SUPLENTE3"/>
+    <Attribute id="cls13#att49" name="pedido" type="integer" db:column="PEDIDO"/>
+  </Class>
+  <Class id="cls14" name="Pedido" duration="persistent" gr:x="385" gr:y="720" attributeOrder="cls14#att50 cls14#att51 cls14#att52 cls14#att53 cls14#att54" db:database="dbD1" db:table="PEDIDO">
+    <Attribute id="cls14#att50" key="true" name="oid" type="integer" db:column="OID"/>
+    <Attribute id="cls14#att51" name="cargo" type="string" db:column="CARGO"/>
+    <Attribute id="cls14#att52" name="materia" type="integer" db:column="MATERIA"/>
+    <Attribute id="cls14#att53" name="categoria" type="string" db:column="CATEGORIA"/>
+    <Attribute id="cls14#att54" name="tribunal" type="integer" db:column="TRIBUNAL"/>
+  </Class>
+</DomainModel>

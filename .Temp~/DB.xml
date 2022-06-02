@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DBMetaData transactionLevel="Read Committed" productName="Apache Derby" identifierQuoteString="&quot;" productVersion="10.5.3.0 - (802917)" driverVersion="10.5.3.0 - (802917)" driverMajorVersion="10" driverMinorVersion="5" driverName="Apache Derby Network Client JDBC Driver">
+  <Schema name="APP"/>
+  <Schema name="NULLID"/>
+  <Schema name="SQLJ"/>
+  <Schema name="SYSCAT"/>
+  <Schema name="SYSCS_DIAG"/>
+  <Schema name="SYSCS_UTIL"/>
+  <Schema name="SYSFUN"/>
+  <Schema name="SYSPROC"/>
+  <Schema name="SYSSTAT"/>
+  <Table schema="APP" refreshed="true" type="TABLE" name="APPLICATION" ignoreIndexes="false">
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="255" name="APP_ID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="REFRESH_TOKEN_VALIDITY" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="ACCESS_TOKEN_VALIDITY" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="AUTHORITIES" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="SECRET" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="DESCRIPTION" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NAME" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="TYPE" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="APPROVAL" ignoreIndexes="false">
+    <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="TIMESTAMP" size="26" name="UPDATED_AT" decimalDigits="6" primaryKey="false"/>
+    <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="TIMESTAMP" size="26" name="EXPIRATION_DATE" decimalDigits="6" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="STATUS" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="SCOPE" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="IDENTITY_USER_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_APPROVAL_APPLICATION" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_APPROVAL_IDENTITY" foreignColumnName="USER_ID" foreignTableName="IDENTITY" localColumnName="IDENTITY_USER_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="AUTHORIZED_GRANT_TYPE" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NAME" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_AUTHORIZED_GRANT_TYPE_APPLI" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="AUTHORIZED_RESOURCE" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NAME" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_AUTHORIZED_RESOURCE_APPLICA" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="CARRERA" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NOMBRE" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="FACULTAD_OID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_CARRERA_FACULTAD" foreignColumnName="OID" foreignTableName="FACULTAD" localColumnName="FACULTAD_OID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="CLAIM" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="KEY" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="1000" name="VALUE" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="CLAIM_IDENTITY" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="CLAIM_OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="255" name="IDENTITY_USER_ID" decimalDigits="0" primaryKey="true"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_CLAIM_IDENTITY_CLAIM" foreignColumnName="OID" foreignTableName="CLAIM" localColumnName="CLAIM_OID"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_CLAIM_IDENTITY_IDENTITY" foreignColumnName="USER_ID" foreignTableName="IDENTITY" localColumnName="IDENTITY_USER_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="CODE" ignoreIndexes="false">
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="255" name="CODE" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="AUTHENTICATION" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="TIMESTAMP" size="26" name="CREATION_DATE" decimalDigits="6" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="DEVICE" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="DEVICE_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NOTIFICATION_DEVICE_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="MODEL" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="PLATFORM" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="PLATFORM_VERSION" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="BROWSER" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="IDENTITY_USER_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_DEVICE_APPLICATION" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_DEVICE_IDENTITY" foreignColumnName="USER_ID" foreignTableName="IDENTITY" localColumnName="IDENTITY_USER_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="FACULTAD" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NOMBRE" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="IDENTITY" ignoreIndexes="false">
+    <Column sqlTypeId="5" indexed="unknown" notNull="false" autoIncrement="false" type="SMALLINT" size="5" name="EXPIRED" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="5" indexed="unknown" notNull="false" autoIncrement="false" type="SMALLINT" size="5" name="LOCKED" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="PASSWORD" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="255" name="USER_ID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="5" indexed="unknown" notNull="false" autoIncrement="false" type="SMALLINT" size="5" name="DISABLED" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="ATTEMPTS_NUMBER" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="TIMESTAMP" size="26" name="PASSWORD_EXPIRATION_DATE" decimalDigits="6" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="EMAIL" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="5" indexed="unknown" notNull="false" autoIncrement="false" type="SMALLINT" size="5" name="AUTH_ADMIN" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="FIRST_NAME" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="LAST_NAME" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="MATERIA" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NOMBRE" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="CARRERA_OID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_MATERIA_CARRERA" foreignColumnName="OID" foreignTableName="CARRERA" localColumnName="CARRERA_OID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="PEDIDO" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="CARGO" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="MATERIA" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="CATEGORIA" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="TRIBUNAL" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="TRIBUNAL_OID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_PEDIDO_TRIBUNAL" foreignColumnName="OID" foreignTableName="TRIBUNAL" localColumnName="TRIBUNAL_OID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="REFRESH_TOKEN" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="1000" name="TOKEN" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="93" indexed="unknown" notNull="false" autoIncrement="false" type="TIMESTAMP" size="26" name="EXPIRATION_DATE" decimalDigits="6" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="IDENTITY_USER_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_REFRESH_TOKEN_APPLICATION" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_REFRESH_TOKEN_IDENTITY" foreignColumnName="USER_ID" foreignTableName="IDENTITY" localColumnName="IDENTITY_USER_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="SCOPE" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="5" indexed="unknown" notNull="false" autoIncrement="false" type="SMALLINT" size="5" name="AUTO_APPROVE" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="NAME" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="APPLICATION_APP_ID" decimalDigits="0" primaryKey="false"/>
+    <ForeignKey foreignSchemaName="APP" name="FK_SCOPE_APPLICATION" foreignColumnName="APP_ID" foreignTableName="APPLICATION" localColumnName="APPLICATION_APP_ID"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="TRIBUNAL" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="TITULAR" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="TITULAR2" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="TITULAR3" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="SUPLENTE1" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="SUPLENTE2" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="SUPLENTE3" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="4" indexed="unknown" notNull="false" autoIncrement="false" type="INTEGER" size="10" name="PEDIDO" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="USER" ignoreIndexes="false">
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="255" name="USER_ID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="false" autoIncrement="false" type="VARCHAR" size="255" name="SECRET_KEY" decimalDigits="0" primaryKey="false"/>
+  </Table>
+  <Table schema="APP" refreshed="true" type="TABLE" name="WR_DELETE_HISTORY" ignoreIndexes="false">
+    <Column sqlTypeId="4" indexed="unknown" notNull="true" autoIncrement="false" type="INTEGER" size="10" name="OID" decimalDigits="0" primaryKey="true"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="200" name="OBJECT_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="12" indexed="unknown" notNull="true" autoIncrement="false" type="VARCHAR" size="32" name="CLASS_ID" decimalDigits="0" primaryKey="false"/>
+    <Column sqlTypeId="93" indexed="unknown" notNull="true" autoIncrement="false" type="TIMESTAMP" size="26" name="DELETED_AT" decimalDigits="6" primaryKey="false"/>
+  </Table>
+</DBMetaData>
